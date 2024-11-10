@@ -1,0 +1,36 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug Backend",
+            "type": "pwa-node",
+            "request": "launch",
+            "program": "${workspaceFolder}/src/main.ts",
+            "cwd": "${workspaceFolder}/",
+            "runtimeExecutable": "deno",
+            "runtimeArgs": [
+              "run",
+              "--inspect",
+              "--allow-net",
+              "--allow-read",
+              "--allow-write",
+            ],
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen",
+            "attachSimplePort": 9229
+          },
+          {
+            "name": "Debug Frontend",
+            "type": "chrome",
+            "request": "launch",
+            "url": "http://localhost:8000",
+            "webRoot": "${workspaceFolder}/public"
+          }
+        ],
+        "compounds": [
+          {
+            "name": "Debug Fullstack",
+            "configurations": ["Debug Backend", "Debug Frontend"]
+          }
+        ]
+  }
