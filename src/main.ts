@@ -1,16 +1,5 @@
 import { serveFile } from "jsr:@std/http/file-server";
 
-// JSON data as a string
-const wines = `
-[
-  { "name": "Cabernet Sauvignon", "year": 2015, "region": "Napa Valley" },
-  { "name": "Pinot Noir", "year": 2018, "region": "Burgundy" },
-  { "name": "Sauvignon Blanc", "year": 2017, "region": "Marlborough" },
-  { "name": "Chianti", "year": 1989, "region": "Tuscany" },
-  { "name": "Saperavi", "year": 1990, "region": "Kakheti" }
-]
-`;
-
 const handler = async (req: Request): Promise<Response> => {
   const url = new URL(req.url);
   
@@ -33,7 +22,8 @@ const handler = async (req: Request): Promise<Response> => {
   // Content JSON
   if (url.pathname === "/api/content") {
     console.log("API: /content");
-    return new Response(wines, {
+    const contents = await Deno.readTextFile("src/content.json");
+    return new Response(contents, {
       headers: { "content-type": "application/json" },
     });
   }
