@@ -8,7 +8,7 @@
         "region": "Napa Valley",
         "country": "United States",
         "price": 99,
-        "litres": 0.75,
+        "volume": 0.75,
         "count": 1
     },
     { 
@@ -20,7 +20,7 @@
         "region": "Burgundy",
         "country": "France",
         "price": 4.99,
-        "litres": 0.75,
+        "volume": 0.75,
         "count": 1
     },
     { 
@@ -32,7 +32,7 @@
         "region": "Marlborough",
         "country": "New Zealand",
         "price": 20,
-        "litres": 0.75,
+        "volume": 0.75,
         "count": 1 
     },
     {
@@ -44,7 +44,7 @@
         "region": "Tuscany",
         "country": "Italy",
         "price": 999,
-        "litres": 0.75,
+        "volume": 0.75,
         "count": 5
     },
     { 
@@ -56,7 +56,7 @@
         "region": "Kakheti",
         "country": "Georgia",
         "price": 999,
-        "litres": 0.75,
+        "volume": 0.75,
         "count": 3 
     }
   ]
