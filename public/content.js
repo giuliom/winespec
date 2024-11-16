@@ -1,5 +1,7 @@
+import {config, API_URL} from './config.js';
+
 function getContent() {
-    fetch('http://localhost:8000/api/content')
+    fetch(`${config.endpoint}${API_URL}/content`)
     .then(response => response.json())
     .then(wines => {
       const wineGrid = document.getElementById('wine-grid');
