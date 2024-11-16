@@ -21,6 +21,11 @@ function displayData(data) {
     const wineDiv = document.createElement('div');
     wineDiv.classList.add('wine-box');
 
+    // Generate the types HTML
+    const typesHTML = wine.types
+        .map(type => `<span class="wine-type">${type}</span>`)
+        .join(', ');
+
     // Populate the div with wine details
     wineDiv.innerHTML = `
     <div class="wine-card">
@@ -32,6 +37,7 @@ function displayData(data) {
             <ul>
                 <li><i class="fas fa-wine-glass-alt"></i><span><strong>Grape:</strong> ${wine.grape}</span></li>
                 <li><i class="fas fa-percentage"></i><span><strong>Alcohol Content:</strong> ${wine.alcohol_content}%</span></li>
+                <li><i class="fas fa-tint"></i><span><strong>Type:</strong> ${typesHTML}</span></li>
                 <li><i class="fas fa-industry"></i><span><strong>Winery:</strong> ${wine.winery}</span></li>
                 <li><i class="fas fa-map-marker-alt"></i><span><strong>Region:</strong> ${wine.region}, ${wine.country}</span></li>
                 <li><i class="fas fa-dollar-sign"></i><span><strong>Price:</strong> $${wine.price.toFixed(2)}</span></li>
@@ -44,7 +50,7 @@ function displayData(data) {
 
     // Append the wine div to the container
     container.appendChild(wineDiv);
-  });
+});
 }
   
   // Call the function when the page loads
