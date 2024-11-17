@@ -22,7 +22,7 @@ const handler = async (req: Request): Promise<Response> => {
   // Content JSON
   if (url.pathname === "/api/content") {
     console.log("API: /content");
-    const contents = await Deno.readTextFile("src/content.json");
+    const contents = await Deno.readTextFile("docker/content.json");
     return new Response(contents, {
       headers: { "content-type": "application/json" },
     });

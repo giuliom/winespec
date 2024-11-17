@@ -36,7 +36,7 @@ function displayData(data) {
             <h2 class="wine-title">${wine.name} <span class="wine-year">(${wine.year})</span></h2>
             <ul>
                 <li><i class="fas fa-wine-glass-alt"></i><span><strong>Grape:</strong> ${wine.grape}</span></li>
-                <li><i class="fas fa-percentage"></i><span><strong>Alcohol Content:</strong> ${wine.alcohol_content}%</span></li>
+                <li><i class="fas fa-percentage"></i><span><strong>Alcohol Content:</strong> ${wine.abv}%</span></li>
                 <li><i class="fas fa-tint"></i><span><strong>Type:</strong> ${typesHTML}</span></li>
                 <li><i class="fas fa-industry"></i><span><strong>Winery:</strong> ${wine.winery}</span></li>
                 <li><i class="fas fa-map-marker-alt"></i><span><strong>Region:</strong> ${wine.region}, ${wine.country}</span></li>
