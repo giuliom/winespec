@@ -50,12 +50,11 @@ interface Wine {
   count: number;
 }
 
-export async function getWines() {
+export async function getWines() : Promise<Wine[]> {
   try {
     const result = await dbClient.queryObject<Wine>(`SELECT ${winesKeys} FROM wines`);
-    return result.rows;
+    return Promise.resolve(result.rows);
   } catch (error) {
-    console.error(`getWines() failed: ${error}`);
-    return "";
+    return Promise.reject(error);
   }
 }

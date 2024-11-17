@@ -22,13 +22,13 @@ CREATE TABLE wines (
     name VARCHAR(100) NOT NULL,
     year INT,
     grape VARCHAR(50),
-    abv NUMERIC(4,2),
+    abv REAL,
     types TEXT[],
     winery VARCHAR(100),
     region VARCHAR(100),
     country VARCHAR(100),
-    price NUMERIC(10,2),
-    volume NUMERIC(4,2),
+    price REAL,
+    volume REAL,
     count INT
 );
 

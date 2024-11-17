@@ -1,4 +1,5 @@
 import { serveFile } from "jsr:@std/http/file-server";
+import { dbClient, getWines } from "./database.ts";
 
 const handler = async (req: Request): Promise<Response> => {
   const url = new URL(req.url);
@@ -22,8 +23,17 @@ const handler = async (req: Request): Promise<Response> => {
   // Content JSON
   if (url.pathname === "/api/content") {
     console.log("API: /content");
-    const contents = await Deno.readTextFile("docker/content.json");
-    return new Response(contents, {
+
+    await dbClient.connect()
+    .catch(reason => {
+      console.error(`Database connection failure: ${reason}`);
+      return new Response(`${reason}`, { status: 404 });
+    })
+
+    const wines = await getWines()
+    dbClient.end();
+    const jsonWines = JSON.stringify(wines);
+    return new Response(jsonWines, {
       headers: { "content-type": "application/json" },
     });
   }
