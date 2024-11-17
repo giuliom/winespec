@@ -26,6 +26,36 @@
             "request": "launch",
             "url": "http://localhost:8000",
             "webRoot": "${workspaceFolder}/public"
+          },
+          {
+            "name": "Deno Test",
+            "type": "node",
+            "request": "launch",
+            "program": "${workspaceFolder}/",
+            "cwd": "${workspaceFolder}",
+            "runtimeExecutable": "deno",
+            "runtimeArgs": [
+              "test",
+              "-A",
+              "--inspect"
+            ],
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen",
+            "attachSimplePort": 9229
+          },
+          {
+            "name": "Deno Lint",
+            "type": "node",
+            "request": "launch",
+            "program": "${workspaceFolder}/",
+            "cwd": "${workspaceFolder}",
+            "runtimeExecutable": "deno",
+            "runtimeArgs": [
+              "lint"
+            ],
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen",
+            "attachSimplePort": 9229
           }
         ],
         "compounds": [
