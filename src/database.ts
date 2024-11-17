@@ -6,26 +6,56 @@ const config : ClientOptions =
   connection: {
     attempts: 1,
   },
-  database: "test",
+  database: "content",
   hostname: "localhost",
   host_type: "tcp",
-  password: "password",
+  password: "test_password",
   options: {
-    max_index_keys: "32",
   },
   port: 5432,
-  user: "user",
+  user: "test_user",
   tls: {
     enforce: false,
   },
 };
 
 
-const client = new Client(config);
-await client.connect();
-await client.end();
+export const dbClient = new Client(config);
 
-async function sampleQuery() {
-    const result = await client.queryArray("SELECT ID, NAME FROM WINES");
-    console.log(result.rows); 
+const winesKeys = [
+  "name",
+  "year",
+  "grape",
+  "abv",
+  "types",
+  "winery",
+  "region",
+  "country",
+  "price",
+  "volume",
+  "count",
+];
+
+interface Wine {
+  name: string;
+  year: number;
+  grape: string;
+  abv: number;
+  types: string[];
+  winery: string;
+  region: string;
+  country: string;
+  price: number;
+  volume: number;
+  count: number;
+}
+
+export async function getWines() {
+  try {
+    const result = await dbClient.queryObject<Wine>(`SELECT ${winesKeys} FROM wines`);
+    return result.rows;
+  } catch (error) {
+    console.error(`getWines() failed: ${error}`);
+    return "";
+  }
 }
