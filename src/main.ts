@@ -1,5 +1,5 @@
 import { serveFile } from "jsr:@std/http/file-server";
-import { getWines } from "./database.ts";
+import { dbClient, getWines, pool } from "./database.ts";
 
 const handler = async (req: Request): Promise<Response> => {
   const url = new URL(req.url);
@@ -49,6 +49,14 @@ const handler = async (req: Request): Promise<Response> => {
     
   return new Response(`Not found`, { status: 404 });
 }
+
+function sigIntHandler() {
+  console.log("Server gracefully shutting down");
+  pool.end();
+  dbClient.end();
+  Deno.exit();
+}
+Deno.addSignalListener("SIGINT", sigIntHandler);
 
 console.log("Server running on http://localhost:8000");
 Deno.serve({ port: 8000 }, handler);
