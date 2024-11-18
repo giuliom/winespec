@@ -112,13 +112,13 @@ export async function getWines(connection: db.PoolClient) : Promise<Wine[]> {
   } 
 }
 
-export async function getWine(connection: db.PoolClient, wine_uuid: string) : Promise<Wine> {
+export async function getWine(connection: db.PoolClient, wineUUID: string) : Promise<Wine> {
   try {
-    if  (!stdUUID.validate(wine_uuid)) throw "Invalid wine UUID";
+    if  (!stdUUID.validate(wineUUID)) throw "Invalid wine UUID";
 
     const result = await connection.queryObject<Wine>(`
       SELECT * FROM wines
-      WHERE uuid = ${wine_uuid}
+      WHERE uuid = '${wineUUID}'
     `)
 
     if (result.rowCount === undefined || result.rowCount < 1) throw "Wine not found";
@@ -128,10 +128,10 @@ export async function getWine(connection: db.PoolClient, wine_uuid: string) : Pr
   } 
 }
 
-export async function addWine(connection: db.PoolClient, name: string) : Promise<boolean> {
+export async function addWine(connection: db.PoolClient, _name: string) : Promise<boolean> {
   try {
 
-    const result = await connection.queryArray(`
+    const _result = await connection.queryArray(`
       `);
 
     return Promise.resolve(true);

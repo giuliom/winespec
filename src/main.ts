@@ -1,8 +1,10 @@
 import { serveFile } from "jsr:@std/http/file-server";
-import { dbClient, getWines, pool } from "./database.ts";
+import { dbClient, getWines, getWine, pool } from "./database.ts";
+import { logRequest } from "../utils/logging.ts";
 
 const handler = async (req: Request): Promise<Response> => {
   const url = new URL(req.url);
+  console.log(`Req: ${logRequest(url)}`);
   
   try {
     // HTML
@@ -21,10 +23,8 @@ const handler = async (req: Request): Promise<Response> => {
       })
     }
 
-    // Content JSON
+    // Content
     if (url.pathname === "/api/content") {
-      console.log("API: /content");
-
       const connection = await pool.connect();
       try {
         const wines = await getWines(connection);
@@ -33,18 +33,39 @@ const handler = async (req: Request): Promise<Response> => {
       return new Response(jsonWines, {
         headers: { "content-type": "application/json" },
       });
-    } catch (error) {
-      console.error(error);
-    } finally {
-      connection.release();
+      } catch (error) {
+        console.error(error);
+        return new Response(`${error}`, { status: 400 });
+      } finally {
+        connection.release();
+      }
     }
+
+    // Wine
+    if (url.pathname === "/api/wine") {
+      const wineUUID = url.searchParams.get("uuid");
+      const connection = await pool.connect();
+      
+      try {
+        if (!wineUUID) throw "Invalid UUID";
+        const wine = await getWine(connection, wineUUID);
+        const json = JSON.stringify(wine);
+
+      return new Response(json, {
+        headers: { "content-type": "application/json" },
+      });
+      } catch (error) {
+        console.error(error);
+        return new Response(`${error}`, { status: 400 });
+      } finally {
+        connection.release();
+      }
     }
 
     // Serve static files from the "public" directory
     if (req.method === "GET") {
       try {
           const path = `${url.pathname === "/" ? "/index.html" : url.pathname}`;
-          console.log(path);
           return await serveFile(req, `./public${path}`);
       } catch(error) {
           return new Response(`404 Not Found: ${error}`, { status: 404 });

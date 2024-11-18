@@ -127,3 +127,14 @@ footer p {
         grid-template-columns: 1fr;
     }
 }
+
+.wine-card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+  
+.wine-card-link:hover {
+text-decoration: none;
+color: inherit;
+}

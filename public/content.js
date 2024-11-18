@@ -50,8 +50,14 @@ function displayData(data) {
     </div>
     `;
 
-    // Append the wine div to the container
-    container.appendChild(wineDiv);
+    // Create an anchor tag and wrap the wineDiv
+    const link = document.createElement('a');
+    link.href = `api/wine?uuid=${wine.uuid}`;
+    link.classList.add('wine-card-link'); // Add a class for custom styling
+    link.appendChild(wineDiv);
+
+    // Append the link (with wineDiv inside) to the container
+    container.appendChild(link);
 });
 }
   
