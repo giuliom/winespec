@@ -1,4 +1,7 @@
 import * as db from "https://deno.land/x/postgres@v0.19.3/mod.ts";
+import "jsr:@std/dotenv/load";
+
+const db_pw = Deno.env.get("DB_PW");
 
 const localConfig : db.ClientOptions = 
 {
@@ -28,7 +31,7 @@ const supabaseConfig : db.ClientOptions =
   database: "postgres",
   hostname: "aws-0-eu-central-2.pooler.supabase.com",
   host_type: "tcp",
-  password: "redacted",
+  password: db_pw,
   options: {
   },
   port: 6543,

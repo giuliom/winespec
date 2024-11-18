@@ -1,4 +1,7 @@
-#!/usr/bin/env -S deno run --allow-env
+import "jsr:@std/dotenv/load";
+
+
+//#!/usr/bin/env -S deno run --allow-env
 const path = Deno.env.get("DENO_INSTALL");
 
 console.log("Deno Install Path:", path);

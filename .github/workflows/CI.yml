@@ -21,6 +21,10 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
+    # Set environment variables for the job
+    env:
+      DB_PW: ${{ secrets.DB_PW }}
+
     steps:
       - name: Setup repo
         uses: actions/checkout@v4
