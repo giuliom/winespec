@@ -25,12 +25,19 @@ const handler = async (req: Request): Promise<Response> => {
     if (url.pathname === "/api/content") {
       console.log("API: /content");
 
-      const wines = await getWines(1);
-      const jsonWines = JSON.stringify(wines);
+      const connection = await pool.connect();
+      try {
+        const wines = await getWines(connection);
+        const jsonWines = JSON.stringify(wines);
 
       return new Response(jsonWines, {
         headers: { "content-type": "application/json" },
       });
+    } catch (error) {
+      console.error(error);
+    } finally {
+      connection.release();
+    }
     }
 
     // Serve static files from the "public" directory

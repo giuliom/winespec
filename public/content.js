@@ -1,13 +1,15 @@
 import {config, API_URL} from './config.js';
 
 function getContent() {
-    fetch(`${config.endpoint}${API_URL}/content`)
-    .then(response => response.json())
-  .then(data => {
-    // Call a function to display the data
-    displayData(data);
-  })
-  .catch(error => {
+  fetch(`${config.endpoint}${API_URL}/content`)
+  .then(response => {
+    response.json()
+      .then(data => {
+      displayData(data);
+      }). catch(error => {
+        console.error(`Invalid json response: ${error}`);
+      })
+  }).catch(error => {
     console.error('Error fetching data:', error);
   });
 }

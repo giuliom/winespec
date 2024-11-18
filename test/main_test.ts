@@ -8,7 +8,8 @@ Deno.test(function addTest() {
 
 Deno.test(async function databaseTest() {
 
-    const wines = await getWines(1);
+    const connection = await pool.connect();
+    const wines = await getWines(connection);
 
     assert(wines.length > 0);
 
