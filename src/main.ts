@@ -27,7 +27,7 @@ const handler = async (req: Request): Promise<Response> => {
 
       const wines = await getWines(1);
       const jsonWines = JSON.stringify(wines);
-      
+
       return new Response(jsonWines, {
         headers: { "content-type": "application/json" },
       });

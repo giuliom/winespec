@@ -3,7 +3,7 @@ import "jsr:@std/dotenv/load";
 
 const db_pw = Deno.env.get("DB_PW");
 
-const localConfig : db.ClientOptions = 
+const _localConfig : db.ClientOptions = 
 {
   applicationName: "winespec",
   connection: {
@@ -83,14 +83,14 @@ export const dbClient = new db.Client(supabaseConfig);
 // Create a database pool with three connections that are lazily established
 export const pool = new db.Pool(supabaseConfig, 3, true);
 
-export async function getWines(collection_id: Number) : Promise<CollectionTransaction[]> {
+export async function getWines(collection_id: number) : Promise<CollectionTransaction[]> {
   // Connect to the database
   const connection = await pool.connect();
   try {
     // Create the table
     const result = await connection.queryObject<CollectionTransaction>(`
       SELECT ${winesKeys},${transactionKeys} FROM collection_transactions as ct
-      FULL OUTER JOIN wines ON ct.wine_id = wines.id 
+      INNER JOIN wines ON ct.wine_id = wines.id 
       WHERE collection_id = ${collection_id}
     `)
     return Promise.resolve(result.rows);

@@ -12,5 +12,6 @@ Deno.test(async function databaseTest() {
 
     assert(wines.length > 0);
 
-    pool.end()
+    await pool.end();
+    await dbClient.end();
 });
