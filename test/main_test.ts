@@ -1,5 +1,5 @@
 import { assert, assertEquals } from "@std/assert";
-import { dbClient, getWines, pool } from "../src/database.ts";
+import { dbClient, getAllWines, pool } from "../src/database.ts";
 
 // TODO tests
 Deno.test(function addTest() {
@@ -10,7 +10,7 @@ Deno.test(async function databaseTest() {
   let connection;
   try {
     connection = await pool.connect();
-    const wines = await getWines(connection);
+    const wines = await getAllWines(connection);
 
     assert(wines.length > 0); 
   } finally {
