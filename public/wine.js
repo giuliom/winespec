@@ -1,22 +1,18 @@
 import {config, API_URL} from './config.js';
 
-function getWine(){
+async function getWine(){
     // Extract the wineId from the URL query parameters
     const urlParams = new URLSearchParams(globalThis.window.location.search);
     const wineId = urlParams.get('id'); // '123' in this case
 
     if (wineId) {
-        fetch(`${config.endpoint}${API_URL}/wine?id=${wineId}`)
-            .then(response => {
-                response.json()
-                .then(data => {
-                    displayData(data);
-            }). catch(error => {
-            console.error(`Invalid json response: ${error}`);
-        })
-    }).catch(error => {
-        console.error('Error fetching data:', error);
-    });
+        try {
+            const response = await fetch(`${config.endpoint}${API_URL}/wine?id=${wineId}`)
+            const data = await response.json();
+            displayData(data);
+        } catch(error) {
+            console.error('Error fetching data:', error);
+        }
     } else {
         console.error("No wineId provided in the URL");
     }
@@ -57,4 +53,4 @@ function displayData(data) {
     }
 }
 
-getWine();
+await getWine();

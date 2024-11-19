@@ -1,17 +1,13 @@
 import {config, API_URL} from './config.js';
 
-function getContent() {
-  fetch(`${config.endpoint}${API_URL}/content`)
-  .then(response => {
-    response.json()
-      .then(data => {
+async function getContent() {
+  try {
+      const response = await fetch(`${config.endpoint}${API_URL}/content`);
+      const data = await response.json();
       displayData(data);
-      }). catch(error => {
-        console.error(`Invalid json response: ${error}`);
-      })
-  }).catch(error => {
-    console.error('Error fetching data:', error);
-  });
+    } catch(error) {
+      console.error('Error fetching data:', error);
+    }
 }
 
 // Function to display the wine data in the HTML
@@ -62,4 +58,4 @@ function displayData(data) {
 }
   
   // Call the function when the page loads
-getContent();
+await getContent();
