@@ -17,8 +17,9 @@ export async function getUserFromId(connection: PoolClient, userId: number) : Pr
         // Create the table
         const result = await connection.queryObject<User>(`
         SELECT * FROM users
-        WHERE id = ${userId}
-        `);
+        WHERE id = $1`,
+        [userId]
+        );
 
         if (result.rowCount === undefined || result.rowCount < 1) throw "User not found";
         return Promise.resolve(result.rows[0]);

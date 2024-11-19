@@ -54,8 +54,9 @@ export async function getWineFromUUID(connection: PoolClient, wineUUID: string) 
 
         const result = await connection.queryObject<Wine>(`
         SELECT * FROM wines
-        WHERE uuid = '${wineUUID}'
-        `)
+        WHERE uuid = $1`,
+        [wineUUID]
+        )
 
         if (result.rowCount === undefined || result.rowCount < 1) throw "Wine not found";
         return Promise.resolve(result.rows[0]);
@@ -81,13 +82,27 @@ export async function addWine(connection: PoolClient, w: Wine) : Promise<string>
                 winery, region, country, 
                 price, volume, submitter_id
             ) VALUES (
-                '${w.name}', '${w.year}', ARRAY['${w.grapes.join(",")}']::text[], '${w.abv}', ARRAY['${w.types.join(",")}']::text[],
-                '${w.winery}', '${w.region}', '${w.country}', '${w.price}', '${w.volume}', 1
+                $1, $2, $3::text[], $4, $5::text[],
+                $6, $7, $8, $9, $10, $11
             )
             RETURNING uuid
         `;
 
-        const result = await connection.queryObject<{ uuid: string }>(query);
+        const result = await connection.queryObject<{ uuid: string }>(query,
+            [
+                w.name,
+                w.year,
+                w.grapes,
+                w.abv,
+                w.types,
+                w.winery,
+                w.region,
+                w.country,
+                w.price,
+                w.volume,
+                1  // submitter_id
+            ]
+        );
 
         if (result.rows.length === 0) {
            throw new Error("Failed to get inserted wine UUID");
