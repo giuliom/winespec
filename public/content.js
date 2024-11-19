@@ -52,7 +52,7 @@ function displayData(data) {
 
     // Create an anchor tag and wrap the wineDiv
     const link = document.createElement('a');
-    link.href = `api/wine?uuid=${wine.uuid}`;
+    link.href = `wine.html?id=${wine.uuid}`;
     link.classList.add('wine-card-link'); // Add a class for custom styling
     link.appendChild(wineDiv);
 

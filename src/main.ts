@@ -7,13 +7,21 @@ const handler = async (req: Request): Promise<Response> => {
   console.log(`Req: ${logRequest(url)}`);
   
   try {
-    // HTML
+    // Index HTML
     if (url.pathname === "/") {
       const html = await Deno.readTextFile("./public/index.html");
       return new Response(html, {
         headers: { "content-type": "text/html" },
       });
-    } 
+    }
+
+    // Wine HTML
+    if (url.pathname === "/") {
+      const html = await Deno.readTextFile("./public/wine.html");
+      return new Response(html, {
+        headers: { "content-type": "text/html" },
+      });
+    }
     
     // CSS
     if (url.pathname === "/style.css") {
@@ -23,7 +31,7 @@ const handler = async (req: Request): Promise<Response> => {
       })
     }
 
-    // Content
+    // API Content
     if (url.pathname === "/api/content") {
       const connection = await pool.connect();
       try {
@@ -41,9 +49,9 @@ const handler = async (req: Request): Promise<Response> => {
       }
     }
 
-    // Wine
+    // API Wine
     if (url.pathname === "/api/wine") {
-      const wineUUID = url.searchParams.get("uuid");
+      const wineUUID = url.searchParams.get("id");
       const connection = await pool.connect();
       
       try {

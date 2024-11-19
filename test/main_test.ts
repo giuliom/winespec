@@ -7,12 +7,17 @@ Deno.test(function addTest() {
 });
 
 Deno.test(async function databaseTest() {
-
-    const connection = await pool.connect();
+  let connection;
+  try {
+    connection = await pool.connect();
     const wines = await getWines(connection);
 
-    assert(wines.length > 0);
-
-    await pool.end();
+    assert(wines.length > 0); 
+  } finally {
+    if (connection) {
+      await connection.release();
+    }
+    await pool.end(); 
     await dbClient.end();
+  }
 });
