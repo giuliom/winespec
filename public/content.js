@@ -37,7 +37,8 @@ function displayData(data) {
                 <li><i class="fas fa-percentage"></i><span><strong>Alcohol Content:</strong> ${wine.abv}%</span></li>
                 <li><i class="fas fa-tint"></i><span><strong>Type:</strong> ${typesHTML}</span></li>
                 <li><i class="fas fa-industry"></i><span><strong>Winery:</strong> ${wine.winery}</span></li>
-                <li><i class="fas fa-map-marker-alt"></i><span><strong>Region:</strong> ${wine.region}, ${wine.country}</span></li>
+                <li><i class="fas fa-map-marker-alt"></i><span><strong>Region:</strong> ${wine.region}</span></li>
+                <li><i class="fas fa-globe"></i><span><strong>Country:</strong> ${wine.country}</span></li>
                 <li><i class="fas fa-dollar-sign"></i><span><strong>Price:</strong> $${wine.price.toFixed(2)}</span></li>
                 <li><i class="fas fa-wine-glass"></i><span><strong>Volume:</strong> ${wine.volume}L</span></li>
                 <li><i class="fas fa-boxes"></i><span><strong>Count:</strong> ${wine.count}</span></li>

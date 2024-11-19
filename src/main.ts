@@ -1,6 +1,7 @@
 import { serveFile } from "jsr:@std/http/file-server";
-import { dbClient, filterWine, filterWines, getAllWines, getWineFromUUID, pool } from "./database.ts";
+import { dbClient, pool } from "./database.ts";
 import { logRequest } from "../utils/logging.ts";
+import { filterWine, filterWines, getAllWines, getWineFromUUID } from "./wine.ts";
 
 const handler = async (req: Request): Promise<Response> => {
   const url = new URL(req.url);

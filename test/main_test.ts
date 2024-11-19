@@ -1,5 +1,6 @@
 import { assert, assertEquals } from "@std/assert";
-import { dbClient, getAllWines, pool } from "../src/database.ts";
+import { dbClient, pool } from "../src/database.ts";
+import { getAllWines } from "../src/wine.ts";
 
 // TODO tests
 Deno.test(function addTest() {
