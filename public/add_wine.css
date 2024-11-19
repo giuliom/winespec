@@ -1,0 +1,72 @@
+:root {
+    --color-wine: #7e1f35;
+    --color-gold: #b4a365;
+    --color-light: #f8f9fa;
+}
+
+body {
+    font-family: 'Crimson Pro', serif;
+    margin: 0;
+    padding: 0;
+    background-color: #fdfaf6;
+    color: #333;
+}
+
+.wine-form {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    background-color: white;
+}
+
+.wine-form h1 {
+    color: var(--color-wine);
+    margin-bottom: 2rem;
+    font-weight: 700;
+}
+
+.form-label {
+    color: var(--color-wine);
+    font-weight: 600;
+}
+
+.form-control, .form-select {
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+    padding: 0.5rem;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: var(--color-wine);
+    box-shadow: 0 0 0 0.2rem rgba(126, 31, 53, 0.25);
+}
+
+.btn-primary {
+    background-color: var(--color-wine);
+    border-color: var(--color-wine);
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+}
+
+.btn-primary:hover {
+    background-color: #6a1a2d;
+    border-color: #6a1a2d;
+}
+
+.btn-secondary {
+    background-color: var(--color-gold);
+    border-color: var(--color-gold);
+    color: white;
+}
+
+.btn-secondary:hover {
+    background-color: #9a8b55;
+    border-color: #9a8b55;
+}
+
+.wine-form i {
+    color: var(--color-wine);
+    margin-right: 0.5rem;
+}

@@ -1,7 +1,7 @@
 import { serveFile } from "jsr:@std/http/file-server";
 import { dbClient, pool } from "./database.ts";
 import { logRequest } from "../utils/logging.ts";
-import { filterWine, filterWines, getAllWines, getWineFromUUID } from "./wine.ts";
+import * as Wine from "./wine.ts";
 
 const handler = async (req: Request): Promise<Response> => {
   const url = new URL(req.url);
@@ -16,28 +16,12 @@ const handler = async (req: Request): Promise<Response> => {
       });
     }
 
-    // Wine HTML
-    if (url.pathname === "/") {
-      const html = await Deno.readTextFile("./public/wine.html");
-      return new Response(html, {
-        headers: { "content-type": "text/html" },
-      });
-    }
-    
-    // CSS
-    if (url.pathname === "/style.css") {
-      const css = await Deno.readTextFile("public/style.css");
-      return new Response(css, {
-        headers: { "content-type": "text/css" },
-      })
-    }
-
     // API Content
     if (url.pathname === "/api/content") {
       const connection = await pool.connect();
       try {
-        const wines = await getAllWines(connection);
-        const filteredWines = filterWines(wines);
+        const wines = await Wine.getAllWines(connection);
+        const filteredWines = Wine.filterWines(wines);
         const jsonWines = JSON.stringify(filteredWines);
 
       return new Response(jsonWines, {
@@ -51,6 +35,29 @@ const handler = async (req: Request): Promise<Response> => {
       }
     }
 
+    // API Wine Add
+    if (url.pathname === "/api/wine/add" && req.method === "POST") {
+      const connection = await pool.connect();
+    
+    try {
+        // Get JSON data from request body
+        const wineRequest = await req.json();
+
+        const wine = Wine.createWine(wineRequest);
+        const wineUUID = await Wine.addWine(connection, wine);
+
+        return new Response(JSON.stringify({ success: true, uuid: wineUUID }), {
+            status: 200,
+            headers: { "content-type": "application/json" }
+        });
+    } catch (error) {
+        console.error('Error adding wine:', error);
+        return new Response(`${error}`, { status: 400 });
+    } finally {
+        connection.release();
+    }
+    }
+
     // API Wine
     if (url.pathname === "/api/wine") {
       const wineUUID = url.searchParams.get("id");
@@ -58,8 +65,8 @@ const handler = async (req: Request): Promise<Response> => {
       
       try {
         if (!wineUUID) throw "Invalid UUID";
-        const wine = await getWineFromUUID(connection, wineUUID);
-        const filtered = filterWine(wine);
+        const wine = await Wine.getWineFromUUID(connection, wineUUID);
+        const filtered = Wine.filterWine(wine);
         const json = JSON.stringify(filtered);
 
       return new Response(json, {
