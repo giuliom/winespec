@@ -1,0 +1,119 @@
+/* wine.css */
+
+/* Container for Wine Details */
+.wine-card {
+    background-color: var(--color-white); /* Using CSS variable */
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    display: flex;
+    flex-wrap: wrap;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.wine-image {
+    flex: 1 1 300px;
+    text-align: center;
+    padding: 20px;
+}
+
+.wine-icon {
+    font-size: 8rem;
+    color: var(--color-dark-red); /* Using CSS variable */
+}
+
+.wine-info {
+    flex: 2 1 500px;
+    padding: 20px;
+}
+
+.wine-title {
+    font-family: 'Crimson Pro', serif;
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: var(--color-dark-red); /* Using CSS variable */
+}
+
+.details-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.detail-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+}
+
+.detail-item i {
+    margin-right: 10px;
+    color: var(--color-dark-red); /* Using CSS variable */
+    min-width: 25px;
+    text-align: center;
+}
+
+.detail-item strong {
+    width: 150px;
+}
+
+.types-list {
+    list-style: disc outside;
+    margin: 5px 0 0 0;
+    padding-left: 15px;
+}
+
+.types-list li {
+    margin-bottom: 5px;
+}
+
+/* Additional Styles Specific to Wine Page */
+
+/* Example: Add hover effect to wine types */
+.types-list li:hover {
+    color: var(--color-dark-red); /* Using CSS variable */
+    cursor: pointer;
+}
+
+/* Example: Style buttons if any */
+.button {
+    background-color: var(--color-dark-red); /* Using CSS variable */
+    color: var(--color-white); /* Using CSS variable */
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+.button:hover {
+    background-color: var(--color-hover-red); /* Using CSS variable */
+}
+
+/* Responsive Adjustments Specific to Wine Page */
+@media (max-width: 768px) {
+    .wine-card {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .wine-info {
+        padding: 10px;
+    }
+
+    .wine-title {
+        text-align: center;
+    }
+
+    .detail-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .detail-item strong {
+        width: auto;
+        margin-bottom: 5px;
+    }
+}

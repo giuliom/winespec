@@ -1,5 +1,15 @@
 /* public/style.css */
 
+/* Define CSS Variables */
+:root {
+    --color-dark-red: #8B0000;
+    --color-dark-gray: #333;
+    --color-light-gray: #f5f5f5;
+    --color-gold: #ffcc00;
+    --color-white: #fff;
+    --color-hover-red: #a30000; /* Slightly darker red for hover effects */
+}
+
 /* Global Styles */
 body {
     font-family: 'Crimson Pro', serif;
@@ -148,4 +158,15 @@ color: inherit;
 }
 .wine-types li {
     margin: 5px 0;
+}
+
+.site-footer a {
+    color: var(--color-white);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.site-footer a:hover {
+    color: var(--color-gold);
+    text-decoration: underline;
 }

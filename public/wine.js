@@ -24,16 +24,16 @@ function getWine(){
 
 function displayData(data) {
     // Select elements in the DOM where data will be displayed
-    const wineName = document.querySelector('.wine-details h2');
-    const grape = document.querySelector('.wine-details #grape .grape-value');
-    const wineTypesList = document.querySelector('.wine-details #types #types-list');
-    const winery = document.querySelector('.wine-details #winery .winery-value');
-    const wineRegion = document.querySelector('.wine-details #region .region-value');
-    const wineCountry = document.querySelector('.wine-details #region .country-value'); 
-    const wineAlcoholContent = document.querySelector('.wine-details #alcohol-content .alcohol-value'); 
-    const winePrice = document.querySelector('.wine-details #price .price-value'); 
-    const wineVolume = document.querySelector('.wine-details #volume .volume-value');
-    const stockCount = document.querySelector('.wine-details #count .count-value');
+    const wineName = document.querySelector('.wine-title');
+    const grape = document.querySelector('.grape-value');
+    const wineTypesList = document.querySelector('.types-list');
+    const winery = document.querySelector('.winery-value');
+    const wineRegion = document.querySelector('.region-value');
+    const wineCountry = document.querySelector('.country-value');
+    const wineAlcoholContent = document.querySelector('.alcohol-value');
+    const winePrice = document.querySelector('.price-value');
+    const wineVolume = document.querySelector('.volume-value');
+    const stockCount = document.querySelector('.count-value'); // Ensure this exists in the HTML
 
     // Populate the elements with data
     if (wineName) wineName.textContent = data.name;
@@ -43,7 +43,7 @@ function displayData(data) {
     if (wineAlcoholContent) wineAlcoholContent.textContent = ` ${data.abv}%`;
     if (winery) winery.textContent = ` ${data.winery}`;
     if (winePrice) winePrice.textContent = ` $${data.price}`;
-    if (wineVolume) wineVolume.textContent = ` ${data.volume.toFixed(2)}`;
+    if (wineVolume) wineVolume.textContent = ` ${data.volume.toFixed(2)}L`;
     if (stockCount) stockCount.textContent = ` ${data.count}`;
 
     // Populate wine types (assuming it's an array)
