@@ -18,31 +18,22 @@ export interface Wine {
     submitter_id: number;
   }
 
-export const requiredFields = ['name', 'year', 'grapes', 'abv', 'type', 'winery', 
+export const requiredFields = ['name', 'year', 'grapes', 'abv', 'types', 'winery', 
     'region', 'country', 'price', 'volume'];
 
-export function createWine(data: any) : Wine {
+export function createWine(data: Wine) : Wine {
     for (const field of requiredFields) {
-        if (data[field] === undefined) {
+        if (field in data === undefined) {
             throw new Error(`Missing required field: ${field}`);
         }
     }
 
-    return {
-        id: '',
-        name: data.name,
-        year: parseInt(data.year),
-        grapes: Array.isArray(data.grapes) ? data.grapes : [data.grapes],
-        abv: parseFloat(data.abv),
-        types: Array.isArray(data.type) ? data.type : [data.type],
-        winery: data.winery,
-        region: data.region,
-        country: data.country,
-        price: parseFloat(data.price),
-        volume: parseFloat(data.volume),
-        uuid: data.uuid ?? "",
-        submitter_id: 0
-    };
+    data.grapes = Array.isArray(data.grapes) ? data.grapes : [data.grapes];
+    data.types = Array.isArray(data.types) ? data.types : [data.types];
+    data.uuid = data.uuid ?? "",
+    data.submitter_id = 1;
+
+    return data;
 }    
 
 export async function getAllWines(connection: PoolClient) : Promise<Wine[]> { 

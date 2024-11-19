@@ -1,7 +1,7 @@
 import { serveFile } from "jsr:@std/http/file-server";
 import { dbClient, pool } from "./database.ts";
 import { logRequest } from "../utils/logging.ts";
-import * as Wine from "./wine.ts";
+import * as Winelib from "./wine.ts";
 
 const handler = async (req: Request): Promise<Response> => {
   const url = new URL(req.url);
@@ -20,8 +20,8 @@ const handler = async (req: Request): Promise<Response> => {
     if (url.pathname === "/api/content") {
       const connection = await pool.connect();
       try {
-        const wines = await Wine.getAllWines(connection);
-        const filteredWines = Wine.filterWines(wines);
+        const wines = await Winelib.getAllWines(connection);
+        const filteredWines = Winelib.filterWines(wines);
         const jsonWines = JSON.stringify(filteredWines);
 
       return new Response(jsonWines, {
@@ -40,11 +40,9 @@ const handler = async (req: Request): Promise<Response> => {
       const connection = await pool.connect();
     
     try {
-        // Get JSON data from request body
-        const wineRequest = await req.json();
-
-        const wine = Wine.createWine(wineRequest);
-        const wineUUID = await Wine.addWine(connection, wine);
+        const wineRequest: Winelib.Wine = await req.json();
+        const wine = Winelib.createWine(wineRequest);
+        const wineUUID = await Winelib.addWine(connection, wine);
         const responseData = {
           uuid: wineUUID,
           status: 200
@@ -66,8 +64,8 @@ const handler = async (req: Request): Promise<Response> => {
       
       try {
         if (!wineUUID) throw "Invalid UUID";
-        const wine = await Wine.getWineFromUUID(connection, wineUUID);
-        const filtered = Wine.filterWine(wine);
+        const wine = await Winelib.getWineFromUUID(connection, wineUUID);
+        const filtered = Winelib.filterWine(wine);
         const json = JSON.stringify(filtered);
 
       return new Response(json, {

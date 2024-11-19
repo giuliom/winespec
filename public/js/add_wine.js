@@ -27,7 +27,7 @@ async function submitWine(e) {
             year: parseInt(formData.get('year')),
             grapes: Array.from(formData.getAll('grapes')),
             abv: parseFloat(formData.get('abv')),
-            type: Array.from(formData.getAll('type')),
+            types: Array.from(formData.getAll('types')),
             winery: formData.get('winery'),
             region: formData.get('region'),
             country: formData.get('country'),
