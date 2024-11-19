@@ -25,9 +25,9 @@ async function submitWine(e) {
         const wine = {
             name: formData.get('name'),
             year: parseInt(formData.get('year')),
-            grape: formData.get('grape'),
+            grape: Array.from(formData.getAll('grape')),
             abv: parseFloat(formData.get('abv')),
-            type: Array.from(formData.getAll('type')), // Handle multiple selection
+            type: Array.from(formData.getAll('type')),
             winery: formData.get('winery'),
             region: formData.get('region'),
             country: formData.get('country'),
@@ -50,9 +50,11 @@ async function submitWine(e) {
 
         // Show success message
         alert('Wine added successfully!');
+        const json = await response.json();
+        const wineId = json.uuid;
         
         // Redirect to wine list
-        globalThis.window.location.href = 'index.html';
+        globalThis.window.location.href = `${config.endpoint}/wine.html?id=${wineId}`;
 
     } catch (error) {
         console.error('Error adding wine:', error);

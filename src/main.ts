@@ -45,11 +45,12 @@ const handler = async (req: Request): Promise<Response> => {
 
         const wine = Wine.createWine(wineRequest);
         const wineUUID = await Wine.addWine(connection, wine);
+        const responseData = {
+          uuid: wineUUID,
+          status: 200
+        };
 
-        return new Response(JSON.stringify({ success: true, uuid: wineUUID }), {
-            status: 200,
-            headers: { "content-type": "application/json" }
-        });
+        return Response.json(responseData);
     } catch (error) {
         console.error('Error adding wine:', error);
         return new Response(`${error}`, { status: 400 });

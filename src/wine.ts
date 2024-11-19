@@ -90,19 +90,19 @@ export async function addWine(connection: PoolClient, w: Wine) : Promise<string>
                 winery, region, country, 
                 price, volume, submitter_id
             ) VALUES (
-                '${w.name}', '${w.year}', '${w.grape}', '${w.abv}', ARRAY['${w.types.join(",")}']::text[],
+                '${w.name}', '${w.year}', ARRAY['${w.grape}'], '${w.abv}', ARRAY['${w.types.join(",")}']::text[],
                 '${w.winery}', '${w.region}', '${w.country}', '${w.price}', '${w.volume}', 1
             )
+            RETURNING uuid
         `;
 
         const result = await connection.queryObject<{ uuid: string }>(query);
 
         if (result.rows.length === 0) {
-           // throw new Error("Failed to get inserted wine UUID");
+           throw new Error("Failed to get inserted wine UUID");
         }
 
-        const uuid = "";//result.rows[0].uuid;
-
+        const uuid = result.rows[0].uuid;
         return Promise.resolve(uuid);
     } catch (error) {
         return Promise.reject(error);
