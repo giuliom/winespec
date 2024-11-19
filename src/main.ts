@@ -1,5 +1,5 @@
 import { serveFile } from "jsr:@std/http/file-server";
-import { dbClient, getWines, getWine, pool } from "./database.ts";
+import { dbClient, filterWine, filterWines, getAllWines, getWineFromUUID, pool } from "./database.ts";
 import { logRequest } from "../utils/logging.ts";
 
 const handler = async (req: Request): Promise<Response> => {
@@ -35,8 +35,9 @@ const handler = async (req: Request): Promise<Response> => {
     if (url.pathname === "/api/content") {
       const connection = await pool.connect();
       try {
-        const wines = await getWines(connection);
-        const jsonWines = JSON.stringify(wines);
+        const wines = await getAllWines(connection);
+        const filteredWines = filterWines(wines);
+        const jsonWines = JSON.stringify(filteredWines);
 
       return new Response(jsonWines, {
         headers: { "content-type": "application/json" },
@@ -56,8 +57,9 @@ const handler = async (req: Request): Promise<Response> => {
       
       try {
         if (!wineUUID) throw "Invalid UUID";
-        const wine = await getWine(connection, wineUUID);
-        const json = JSON.stringify(wine);
+        const wine = await getWineFromUUID(connection, wineUUID);
+        const filtered = filterWine(wine);
+        const json = JSON.stringify(filtered);
 
       return new Response(json, {
         headers: { "content-type": "application/json" },

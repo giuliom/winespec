@@ -1,6 +1,7 @@
 import * as db from "https://deno.land/x/postgres@v0.19.3/mod.ts";
 import * as stdUUID from "jsr:@std/uuid";
 import "jsr:@std/dotenv/load";
+import * as utils from "../utils/db_utils.ts";
 
 const db_pw = Deno.env.get("DB_PW");
 
@@ -85,7 +86,7 @@ export const dbClient = new db.Client(supabaseConfig);
 // Create a database pool with three connections that are lazily established
 export const pool = new db.Pool(supabaseConfig, 10, true);
 
-export async function getUser(connection: db.PoolClient, userId: number) : Promise<User> {
+export async function getUserFromId(connection: db.PoolClient, userId: number) : Promise<User> {
   try {
     // Create the table
     const result = await connection.queryObject<User>(`
@@ -100,7 +101,11 @@ export async function getUser(connection: db.PoolClient, userId: number) : Promi
   } 
 }
 
-export async function getWines(connection: db.PoolClient) : Promise<Wine[]> { 
+export function filterUser(user: User) {
+  return utils.removeIdField(user);
+}
+
+export async function getAllWines(connection: db.PoolClient) : Promise<Wine[]> { 
   try {
     const result = await connection.queryObject<Wine>(`
       SELECT * FROM wines
@@ -112,7 +117,7 @@ export async function getWines(connection: db.PoolClient) : Promise<Wine[]> {
   } 
 }
 
-export async function getWine(connection: db.PoolClient, wineUUID: string) : Promise<Wine> {
+export async function getWineFromUUID(connection: db.PoolClient, wineUUID: string) : Promise<Wine> {
   try {
     if  (!stdUUID.validate(wineUUID)) throw "Invalid wine UUID";
 
@@ -126,6 +131,15 @@ export async function getWine(connection: db.PoolClient, wineUUID: string) : Pro
   } catch (error) {
     return Promise.reject(error);
   } 
+}
+
+export function filterWine(wine: Wine) {
+  const fields: (keyof Wine)[] = ["id", "submitter_id"];
+  return utils.removeFields(wine, fields);
+}
+
+export function filterWines(wines: Wine[]) {
+  return wines.map(wine => filterWine(wine));
 }
 
 export async function addWine(connection: db.PoolClient, _name: string) : Promise<boolean> {
