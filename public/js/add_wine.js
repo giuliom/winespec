@@ -54,7 +54,7 @@ async function submitWine(e) {
         const wineId = json.uuid;
         
         // Redirect to wine list
-        globalThis.window.location.href = `${config.endpoint}/html/wine.html?id=${wineId}`;
+        globalThis.window.location.href = `${config.endpoint}/wine.html?id=${wineId}`;
 
     } catch (error) {
         console.error('Error adding wine:', error);
