@@ -6,7 +6,7 @@ export interface Wine {
     id: string;
     name: string;
     year: number;
-    grape: string;
+    grapes: string[];
     abv: number;
     types: string[];
     winery: string;
@@ -18,7 +18,7 @@ export interface Wine {
     submitter_id: number;
   }
 
-export const requiredFields = ['name', 'year', 'grape', 'abv', 'type', 'winery', 
+export const requiredFields = ['name', 'year', 'grapes', 'abv', 'type', 'winery', 
     'region', 'country', 'price', 'volume'];
 
 export function createWine(data: any) : Wine {
@@ -32,7 +32,7 @@ export function createWine(data: any) : Wine {
         id: '',
         name: data.name,
         year: parseInt(data.year),
-        grape: data.grape,
+        grapes: Array.isArray(data.grapes) ? data.grapes : [data.grapes],
         abv: parseFloat(data.abv),
         types: Array.isArray(data.type) ? data.type : [data.type],
         winery: data.winery,
@@ -86,11 +86,11 @@ export async function addWine(connection: PoolClient, w: Wine) : Promise<string>
     try {
         const query = `
             INSERT INTO wines (
-                name, year, grape, abv, types, 
+                name, year, grapes, abv, types, 
                 winery, region, country, 
                 price, volume, submitter_id
             ) VALUES (
-                '${w.name}', '${w.year}', ARRAY['${w.grape}'], '${w.abv}', ARRAY['${w.types.join(",")}']::text[],
+                '${w.name}', '${w.year}', ARRAY['${w.grapes.join(",")}']::text[], '${w.abv}', ARRAY['${w.types.join(",")}']::text[],
                 '${w.winery}', '${w.region}', '${w.country}', '${w.price}', '${w.volume}', 1
             )
             RETURNING uuid

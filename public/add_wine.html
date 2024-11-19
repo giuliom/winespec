@@ -11,66 +11,86 @@
 </head>
 <body>
     <div class="container">
-        <div class="wine-form">
+        <div class="wine-form bg-white p-4 rounded shadow-sm">
             <h1 class="text-center mb-4"><i class="fas fa-wine-bottle"></i> Add New Wine</h1>
             <form id="addWineForm">
-                <div class="row g-3">
+                <div class="row g-4">
+                    <!-- Left Column -->
                     <div class="col-md-6">
-                        <label class="form-label">Wine Name</label>
-                        <input type="text" class="form-control" name="name" required>
+                        <div class="mb-3">
+                            <label class="form-label">Name</label>
+                            <input type="text" class="form-control" name="name" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Type</label>
+                            <select class="form-select" name="type" multiple required>
+                                <option value="Red">Red</option>
+                                <option value="White">White</option>
+                                <option value="Rosé">Rosé</option>
+                                <option value="Prosecco">Prosecco</option>
+                                <option value="Spumante">Spumante</option>
+                                <option value="Qvevri">Qvevri</option>
+                                <option value="Champagne">Champagne</option>
+                            </select>
+                            <small class="form-text text-muted">Hold Ctrl/Cmd to select multiple</small>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Winery</label>
+                            <input type="text" class="form-control" name="winery" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Region</label>
+                            <input type="text" class="form-control" name="region" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Volume (L)</label>
+                            <input type="number" class="form-control" name="volume" required step="0.001" min="0" value="0.75">
+                        </div>
                     </div>
+                    
+                    <!-- Right Column -->
                     <div class="col-md-6">
-                        <label class="form-label">Year</label>
-                        <input type="number" class="form-control" name="year" required min="0" max="2025" value="2024">
+                        <div class="mb-3">
+                            <label class="form-label">Year</label>
+                            <input type="number" class="form-control" name="year" required min="1900" max="2024" value="2024">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Grape Varieties</label>
+                            <select class="form-select" name="grapes" multiple required>
+                                <option value="Cabernet Sauvignon">Cabernet Sauvignon</option>
+                                <option value="Pinot Noir">Pinot Noir</option>
+                                <option value="Sauvignon Blanc">Sauvignon Blanc</option>
+                                <option value="Chianti">Chianti</option>
+                                <option value="Sangiovese">Sangiovese</option>
+                                <option value="Saperavi">Saperavi</option>
+                            </select>
+                            <small class="form-text text-muted">Hold Ctrl/Cmd to select multiple</small>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Country</label>
+                            <input type="text" class="form-control" name="country" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">ABV (%)</label>
+                            <input type="number" class="form-control" name="abv" required step="0.1" min="0" max="100" value="12">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Price ($)</label>
+                            <input type="number" class="form-control" name="price" required step="0.01" min="0" value="0">
+                        </div>
+                        
                     </div>
-                    <div class="col-md-6">
-                        <label class="form-label">Grape Varieties</label>
-                        <select class="form-select" name="grape" multiple required>
-                            <option value="Cabernet Sauvignon">Cabernet Sauvignon</option>
-                            <option value="Pinot Noir">Pinot Noir</option>
-                            <option value="Sauvignon Blanc">Sauvignon Blanc</option>
-                            <option value="Chianti">Chianti</option>
-                            <option value="Sangiovese">Sangiovese</option>
-                            <option value="Saperavi">Saperavi</option>
-                        </select>
-                        <small class="form-text text-muted">Hold Ctrl/Cmd to select multiple grapes</small>
-                    <div class="col-md-6">
-                        <label class="form-label">ABV (%)</label>
-                        <input type="number" class="form-control" name="abv" required step="1" min="0" max="100" value="0">
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label">Type</label>
-                        <select class="form-select" name="type" multiple required>
-                            <option value="Red">Red</option>
-                            <option value="White">White</option>
-                            <option value="Rosé">Rosé</option>
-                            <option value="Prosecco">Prosecco</option>
-                            <option value="Spumante">Spumante</option>
-                            <option value="Qvevri">Qvevri</option>
-                            <option value="Champagne">Champagne</option>
-                        </select>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label">Winery</label>
-                        <input type="text" class="form-control" name="winery" required>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label">Region</label>
-                        <input type="text" class="form-control" name="region" required>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label">Country</label>
-                        <input type="text" class="form-control" name="country" required>
-                    </div>
-                    <div class="col-md-4">
-                        <label class="form-label">Price ($)</label>
-                        <input type="number" class="form-control" name="price" required step="0.01" min="0" value="0">
-                    </div>
-                    <div class="col-md-4">
-                        <label class="form-label">Volume (L)</label>
-                        <input type="number" class="form-control" name="volume" required step="0.001" min="0" value="0.75">
-                    </div>
-                    <div class="col-12">
+    
+                    <!-- Full Width Submit Button -->
+                    <div class="col-12 mt-4">
                         <button type="submit" class="btn btn-primary w-100">
                             <i class="fas fa-plus"></i> Add Wine
                         </button>

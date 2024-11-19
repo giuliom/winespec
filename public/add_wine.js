@@ -25,7 +25,7 @@ async function submitWine(e) {
         const wine = {
             name: formData.get('name'),
             year: parseInt(formData.get('year')),
-            grape: Array.from(formData.getAll('grape')),
+            grapes: Array.from(formData.getAll('grapes')),
             abv: parseFloat(formData.get('abv')),
             type: Array.from(formData.getAll('type')),
             winery: formData.get('winery'),

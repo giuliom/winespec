@@ -21,7 +21,7 @@ async function getWine(){
 function displayData(data) {
     // Select elements in the DOM where data will be displayed
     const wineName = document.querySelector('.wine-title');
-    const grape = document.querySelector('.grape-value');
+    const grapesList = document.querySelector('.grapes-list');
     const wineTypesList = document.querySelector('.types-list');
     const winery = document.querySelector('.winery-value');
     const wineRegion = document.querySelector('.region-value');
@@ -33,7 +33,6 @@ function displayData(data) {
 
     // Populate the elements with data
     if (wineName) wineName.textContent = data.name;
-    if (grape) grape.textContent = ` ${data.grape}`;
     if (wineRegion) wineRegion.textContent = ` ${data.region}`;
     if (wineCountry) wineCountry.textContent = ` ${data.country}`;
     if (wineAlcoholContent) wineAlcoholContent.textContent = ` ${data.abv}%`;
@@ -41,6 +40,16 @@ function displayData(data) {
     if (winePrice) winePrice.textContent = ` $${data.price}`;
     if (wineVolume) wineVolume.textContent = ` ${data.volume.toFixed(2)}L`;
     if (stockCount) stockCount.textContent = ` ${data.count}`;
+
+    // Populate wine grapes (assuming it's an array)
+    if (grapesList && Array.isArray(data.grapes)) {
+        grapesList.innerHTML = ''; // Clear existing grapes
+        data.grapes.forEach((grape) => {
+            const listItem = document.createElement('li');
+            listItem.textContent = grape;
+            grapesList.appendChild(listItem);
+        });
+    }
 
     // Populate wine types (assuming it's an array)
     if (wineTypesList && Array.isArray(data.types)) {

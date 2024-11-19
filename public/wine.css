@@ -68,6 +68,16 @@
     margin-bottom: 5px;
 }
 
+.grapes-list {
+    list-style: disc outside;
+    margin: 5px 0 0 0;
+    padding-left: 15px;
+}
+
+.grapes-list li {
+    margin-bottom: 5px;
+}
+
 /* Additional Styles Specific to Wine Page */
 
 /* Example: Add hover effect to wine types */
