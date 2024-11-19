@@ -24,25 +24,27 @@ function getWine(){
 
 function displayData(data) {
     // Select elements in the DOM where data will be displayed
-    const wineName = document.querySelector('.wine-details h1'); // Wine name element
-    const grape = document.querySelector('.wine-details #grape .grape-value'); // Grape element
-    const wineTypesList = document.querySelector('.wine-details #types #types-list'); // Wine types list
-    const wineRegion = document.querySelector('.wine-details #region .region-value'); // Wine region element
-    const wineCountry = document.querySelector('.wine-details #region .country-value'); // Wine country element
-    const wineAlcoholContent = document.querySelector('.wine-details #alcohol-content .alcohol-value'); // Alcohol content element
-    const winePrice = document.querySelector('.wine-details #price .price-value'); // Price element
-    const wineVolume = document.querySelector('.wine-details #volume .volume-value'); // Bottle volume element
-    const stockCount = document.querySelector('.wine-details #count .count-value'); // Stock count element
+    const wineName = document.querySelector('.wine-details h2');
+    const grape = document.querySelector('.wine-details #grape .grape-value');
+    const wineTypesList = document.querySelector('.wine-details #types #types-list');
+    const winery = document.querySelector('.wine-details #winery .winery-value');
+    const wineRegion = document.querySelector('.wine-details #region .region-value');
+    const wineCountry = document.querySelector('.wine-details #region .country-value'); 
+    const wineAlcoholContent = document.querySelector('.wine-details #alcohol-content .alcohol-value'); 
+    const winePrice = document.querySelector('.wine-details #price .price-value'); 
+    const wineVolume = document.querySelector('.wine-details #volume .volume-value');
+    const stockCount = document.querySelector('.wine-details #count .count-value');
 
     // Populate the elements with data
     if (wineName) wineName.textContent = data.name;
-    if (grape) grape.textContent = data.grape;
-    if (wineRegion) wineRegion.textContent = data.region;
-    if (wineCountry) wineCountry.textContent = data.country;
-    if (wineAlcoholContent) wineAlcoholContent.textContent = `${data.abv}%`;
-    if (winePrice) winePrice.textContent = `$${data.price}`;
-    if (wineVolume) wineVolume.textContent = data.volume.toFixed(2); // Assuming `volume` is in liters
-    if (stockCount) stockCount.textContent = data.count;
+    if (grape) grape.textContent = ` ${data.grape}`;
+    if (wineRegion) wineRegion.textContent = ` ${data.region}`;
+    if (wineCountry) wineCountry.textContent = ` ${data.country}`;
+    if (wineAlcoholContent) wineAlcoholContent.textContent = ` ${data.abv}%`;
+    if (winery) winery.textContent = ` ${data.winery}`;
+    if (winePrice) winePrice.textContent = ` $${data.price}`;
+    if (wineVolume) wineVolume.textContent = ` ${data.volume.toFixed(2)}`;
+    if (stockCount) stockCount.textContent = ` ${data.count}`;
 
     // Populate wine types (assuming it's an array)
     if (wineTypesList && Array.isArray(data.types)) {
