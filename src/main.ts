@@ -1,6 +1,6 @@
 import { serveFile } from "jsr:@std/http/file-server";
 import { dbClient, pool } from "./database.ts";
-import { logRequest } from "../utils/logging.ts";
+import { logRequest } from "./utils/logging.ts";
 import * as Winelib from "./wine.ts";
 
 const handler = async (req: Request): Promise<Response> => {

@@ -1,5 +1,5 @@
 import { PoolClient } from "https://deno.land/x/postgres@v0.19.3/mod.ts";
-import * as utils from "../utils/db_utils.ts";
+import * as utils from "./utils/db_utils.ts";
 
 export interface User {
     id: string;
