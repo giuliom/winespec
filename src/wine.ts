@@ -41,9 +41,12 @@ export async function getAllWines(connection: PoolClient) : Promise<Wine[]> {
     try {
         const result = await connection.queryObject<Wine>(`
         SELECT w.*,
-        wy.name as winery
+        wy.name as winery,
+        loc.region as region,
+        loc.country as country
         FROM wines w
-        LEFT JOIN wineries wy ON w.winery_id = wy.id;
+        LEFT JOIN wineries wy ON w.winery_id = wy.id
+        LEFT JOIN locations loc ON wy.location_id = loc.id;
         `);
 
         return Promise.resolve(result.rows);
@@ -58,9 +61,12 @@ export async function getWineFromUUID(connection: PoolClient, wineUUID: string) 
 
         const query = `
             SELECT w.*, 
-            wy.name as winery
+            wy.name as winery,
+            loc.region as region,
+            loc.country as country
             FROM wines w
             LEFT JOIN wineries wy ON w.winery_id = wy.id
+            LEFT JOIN locations loc ON wy.location_id = loc.id
             WHERE w.uuid = $1;
         `;
 
