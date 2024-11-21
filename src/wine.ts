@@ -9,7 +9,8 @@ export interface Wine {
     grapes: string[];
     abv: number;
     types: string[];
-    winery: string;
+    winery_name: string;
+    sub_region: string;
     region: string;
     country: string;
     price: number;
@@ -39,7 +40,10 @@ export function createWine(data: Wine) : Wine {
 export async function getAllWines(connection: PoolClient) : Promise<Wine[]> { 
     try {
         const result = await connection.queryObject<Wine>(`
-        SELECT * FROM wines
+        SELECT w.*,
+        wy.name as winery
+        FROM wines w
+        LEFT JOIN wineries wy ON w.winery_id = wy.id;
         `);
 
         return Promise.resolve(result.rows);
@@ -52,11 +56,17 @@ export async function getWineFromUUID(connection: PoolClient, wineUUID: string) 
     try {
         if  (!stdUUID.validate(wineUUID)) throw "Invalid wine UUID";
 
-        const result = await connection.queryObject<Wine>(`
-        SELECT * FROM wines
-        WHERE uuid = $1`,
-        [wineUUID]
-        )
+        const query = `
+            SELECT w.*, 
+            wy.name as winery
+            FROM wines w
+            LEFT JOIN wineries wy ON w.winery_id = wy.id
+            WHERE w.uuid = $1;
+        `;
+
+        const result = await connection.queryObject<Wine>(query,
+            [wineUUID]
+        );
 
         if (result.rowCount === undefined || result.rowCount < 1) throw "Wine not found";
         return Promise.resolve(result.rows[0]);
@@ -85,7 +95,7 @@ export async function addWine(connection: PoolClient, w: Wine) : Promise<string>
                 $1, $2, $3::text[], $4, $5::text[],
                 $6, $7, $8, $9, $10, $11
             )
-            RETURNING uuid
+            RETURNING uuid;
         `;
 
         const result = await connection.queryObject<{ uuid: string }>(query,
@@ -95,7 +105,7 @@ export async function addWine(connection: PoolClient, w: Wine) : Promise<string>
                 w.grapes,
                 w.abv,
                 w.types,
-                w.winery,
+                w.winery_name,
                 w.region,
                 w.country,
                 w.price,

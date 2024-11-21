@@ -17,7 +17,7 @@ export async function getUserFromId(connection: PoolClient, userId: number) : Pr
         // Create the table
         const result = await connection.queryObject<User>(`
         SELECT * FROM users
-        WHERE id = $1`,
+        WHERE id = $1;`,
         [userId]
         );
 
