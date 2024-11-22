@@ -1,0 +1,65 @@
+
+.winery-card {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    background-color: white;
+}
+
+.winery-icon {
+    font-size: 3rem;
+    color: #7e1f35;
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
+}
+
+header, footer {
+    padding: 2rem;
+    text-align: center;
+}
+
+.page-title {
+    color: #7e1f35;
+    font-family: 'Crimson Pro', serif;
+    font-size: 2.5rem;
+    margin-top: 1rem;
+}
+
+.winery-title {
+    color: #7e1f35;
+    font-weight: 700;
+    margin-bottom: 2rem;
+}
+
+.details-list {
+    list-style: none;
+    padding: 0;
+}
+
+.detail-item {
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+}
+
+.detail-item i {
+    color: #7e1f35;
+    width: 25px;
+    margin-right: 10px;
+}
+
+.btn-outline-primary {
+    color: #7e1f35;
+    border-color: #7e1f35;
+}
+
+.btn-outline-primary:hover {
+    background-color: #7e1f35;
+    color: white;
+}
