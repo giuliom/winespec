@@ -2,6 +2,7 @@ import { serveFile } from "jsr:@std/http/file-server";
 import { dbClient, pool } from "./database.ts";
 import { logRequest } from "./utils/logging.ts";
 import * as Winelib from "./wine.ts";
+import * as Winerylib from "./winery.ts";
 
 const handler = async (req: Request): Promise<Response> => {
   const url = new URL(req.url);
@@ -66,6 +67,28 @@ const handler = async (req: Request): Promise<Response> => {
         if (!wineUUID) throw "Invalid UUID";
         const wine = await Winelib.getWineFromUUID(connection, wineUUID);
         const filtered = Winelib.filterWine(wine);
+        const json = JSON.stringify(filtered);
+
+      return new Response(json, {
+        headers: { "content-type": "application/json" },
+      });
+      } catch (error) {
+        console.error(error);
+        return new Response(`${error}`, { status: 400 });
+      } finally {
+        connection.release();
+      }
+    }
+
+    // API Winery
+    if (url.pathname === "/api/winery") {
+      const wineryUUID = url.searchParams.get("id");
+      const connection = await pool.connect();
+      
+      try {
+        if (!wineryUUID) throw "Invalid UUID";
+        const winery = await Winerylib.getWineryFromUUID(connection, wineryUUID);
+        const filtered = Winerylib.filterWinery(winery);
         const json = JSON.stringify(filtered);
 
       return new Response(json, {

@@ -1,5 +1,5 @@
-import * as stdUUID from "jsr:@std/uuid";
 import { PoolClient } from "https://deno.land/x/postgres@v0.19.3/mod.ts";
+import * as stdUUID from "jsr:@std/uuid";
 import * as utils from "./utils/db_utils.ts";
 
 export interface Wine {
@@ -10,6 +10,7 @@ export interface Wine {
     abv: number;
     types: string[];
     winery_name: string;
+    winery_uuid: string;
     sub_region: string;
     region: string;
     country: string;
@@ -32,6 +33,7 @@ export function createWine(data: Wine) : Wine {
     data.grapes = Array.isArray(data.grapes) ? data.grapes : [data.grapes];
     data.types = Array.isArray(data.types) ? data.types : [data.types];
     data.uuid = data.uuid ?? "",
+    data.winery_uuid = data.winery_uuid ?? "";
     data.submitter_id = 1;
 
     return data;
@@ -62,6 +64,7 @@ export async function getWineFromUUID(connection: PoolClient, wineUUID: string) 
         const query = `
             SELECT w.*, 
             wy.name as winery,
+            wy.uuid as winery_uuid,
             loc.region as region,
             loc.country as country
             FROM wines w

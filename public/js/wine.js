@@ -36,7 +36,6 @@ function displayData(data) {
     if (wineRegion) wineRegion.textContent = ` ${data.region}`;
     if (wineCountry) wineCountry.textContent = ` ${data.country}`;
     if (wineAlcoholContent) wineAlcoholContent.textContent = ` ${data.abv}%`;
-    if (winery) winery.textContent = ` ${data.winery}`;
     if (winePrice) winePrice.textContent = ` $${data.price}`;
     if (wineVolume) wineVolume.textContent = ` ${data.volume.toFixed(2)}L`;
     if (stockCount) stockCount.textContent = ` ${data.count}`;
@@ -59,6 +58,15 @@ function displayData(data) {
             listItem.textContent = type;
             wineTypesList.appendChild(listItem);
         });
+    }
+
+    if (data.winery_uuid) {
+        const wineryLink = document.createElement('a');
+        wineryLink.href = `/winery.html?id=${data.winery_uuid}`;
+        wineryLink.textContent = data.winery || 'N/A';
+        wineryLink.classList.add('winery-link');
+        winery.innerHTML = '';
+        winery.appendChild(wineryLink);
     }
 }
 
