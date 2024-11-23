@@ -1,6 +1,7 @@
 import { PoolClient } from "https://deno.land/x/postgres@v0.19.3/mod.ts";
 import * as stdUUID from "jsr:@std/uuid";
 import * as utils from "./utils/db_utils.ts";
+import { Winery, getWineryFromName } from "./winery.ts";
 
 export interface Wine {
     id: string;
@@ -10,6 +11,7 @@ export interface Wine {
     abv: number;
     types: string[];
     winery_name: string;
+    winery_id: string;
     winery_uuid: string;
     sub_region: string;
     region: string;
@@ -38,6 +40,8 @@ export function createWine(data: Wine) : Wine {
 
     return data;
 }    
+
+// TODO refactor all queries logic and add proper error checks
 
 export async function getAllWines(connection: PoolClient) : Promise<Wine[]> { 
     try {
@@ -95,41 +99,94 @@ export function filterWines(wines: Wine[]) {
 
 export async function addWine(connection: PoolClient, w: Wine) : Promise<string> {
     try {
-        const query = `
+        await connection.queryObject('BEGIN');
+
+        // Check if Winery is already present
+        const winery : Winery | null = await getWineryFromName(connection, w.winery_uuid);
+
+        if (!winery) {
+            // Country
+            const countryQuery = `
+                SELECT name
+                FROM countries
+                WHERE name = $1
+            `;
+
+            const countryResult = await connection.queryObject<{ name: string }>(countryQuery,
+                [w.country]
+            );
+
+            if (countryResult.rowCount === 0) {
+                throw `Invalid country: ${w.country}`;
+            }
+            
+            // Location
+            const locationQuery = `
+                INSERT INTO locations (sub_region, region, country)
+                VALUES ($1, $2, $3)
+                ON CONFLICT (sub_region, region, country) 
+                DO UPDATE SET id = locations.id
+                RETURNING id
+            `;
+
+            const locationResult = await connection.queryObject<{ id: number }>(locationQuery,
+                [
+                    w.sub_region || "",
+                    w.region || "",
+                    w.country
+                ]
+            );
+            const locationId = locationResult.rows[0].id;
+
+            // Winery
+            const wineryQuery = `
+                INSERT INTO wineries (name, location_id)
+                VALUES ($1, $2)
+                ON CONFLICT (name)
+                DO UPDATE SET id = wineries.id
+                RETURNING id
+            `;
+
+            const wineryResult = await connection.queryObject<{ id: string }>(wineryQuery,
+                [w.winery_name, locationId]
+            );
+
+            w.winery_id = wineryResult.rows[0].id;
+        }
+
+        // Wine Insertion
+        const wineQuery = `
             INSERT INTO wines (
                 name, year, grapes, abv, types, 
-                winery, region, country, 
+                winery_id, 
                 price, volume, submitter_id
             ) VALUES (
                 $1, $2, $3::text[], $4, $5::text[],
-                $6, $7, $8, $9, $10, $11
+                $6, $7, $8, $9
             )
             RETURNING uuid;
         `;
 
-        const result = await connection.queryObject<{ uuid: string }>(query,
+        const result = await connection.queryObject<{ uuid: string }>(wineQuery,
             [
                 w.name,
                 w.year,
                 w.grapes,
                 w.abv,
                 w.types,
-                w.winery_name,
-                w.region,
-                w.country,
+                w.winery_id,
                 w.price,
                 w.volume,
                 1  // submitter_id
             ]
         );
 
-        if (result.rows.length === 0) {
-           throw new Error("Failed to get inserted wine UUID");
-        }
+        await connection.queryObject('COMMIT');
 
         const uuid = result.rows[0].uuid;
         return Promise.resolve(uuid);
     } catch (error) {
+        await connection.queryObject('ROLLBACK');
         return Promise.reject(error);
     } 
 }

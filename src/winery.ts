@@ -37,6 +37,28 @@ export async function getWineryFromUUID(connection: PoolClient, wineryUUID: stri
     } 
 }
 
+export async function getWineryFromName(connection: PoolClient, wineryName: string) : Promise<Winery | null> {
+    try {
+        const query = `
+            SELECT wy.*, 
+            loc.sub_region,
+            loc.region,
+            loc.country
+            FROM wineries wy
+            LEFT JOIN locations loc ON wy.location_id = loc.id
+            WHERE wy.name = $1;
+        `;
+
+        const result = await connection.queryObject<Winery>(query,
+            [wineryName]
+        );
+
+        return Promise.resolve(result.rows[0]);
+    } catch (error) {
+        return Promise.reject(error);
+    } 
+}
+
 export function filterWinery(wine: Winery) {
     const fields: (keyof Winery)[] = ["id", "submitter_id"];
     return utils.removeFields(wine, fields);
