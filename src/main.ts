@@ -36,6 +36,21 @@ const handler = async (req: Request): Promise<Response> => {
       }
     }
 
+    // API Wine Types
+    if (url.pathname === "/api/wine/types" && req.method === "GET") {
+      const connection = await pool.connect();
+      try {
+          const types: string[] = await Winelib.getWineTypes(connection);
+          return new Response(JSON.stringify(types), {
+              headers: { "content-type": "application/json" }
+          });
+      } catch (error) {
+          return new Response(`Error: ${error}`, { status: 500 });
+      } finally {
+          connection.release();
+      }
+  }
+
     // API Wine Add
     if (url.pathname === "/api/wine/add" && req.method === "POST") {
       const connection = await pool.connect();

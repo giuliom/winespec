@@ -190,3 +190,16 @@ export async function addWine(connection: PoolClient, w: Wine) : Promise<string>
         return Promise.reject(error);
     } 
 }
+
+export async function getWineTypes(connection: PoolClient) : Promise<string[]> {
+    try {
+        const result = await connection.queryObject<string>(`
+            SELECT type
+            FROM types;
+        `);
+
+        return Promise.resolve(result.rows);
+    } catch (error) {
+        return Promise.reject(error);
+    } 
+}

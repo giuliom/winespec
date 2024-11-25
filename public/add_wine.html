@@ -24,16 +24,16 @@
                         
                         <div class="mb-3">
                             <label class="form-label">Type</label>
-                            <select class="form-select" name="types" multiple required>
-                                <option value="Red">Red</option>
-                                <option value="White">White</option>
-                                <option value="Rosé">Rosé</option>
-                                <option value="Prosecco">Prosecco</option>
-                                <option value="Spumante">Spumante</option>
-                                <option value="Qvevri">Qvevri</option>
-                                <option value="Champagne">Champagne</option>
-                            </select>
-                            <small class="form-text text-muted">Hold Ctrl/Cmd to select multiple</small>
+                            <div class="checkbox-container">
+                                <input type="text" class="form-control mb-2 search-input" placeholder="Search types...">
+                                <div class="checkbox-group" id="types">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="types[]" value="Red" id="typeRed">
+                                        <label class="form-check-label" for="typeRed">Red</label>
+                                    </div>
+                                    <!-- Other checkboxes... -->
+                                </div>
+                            </div>
                         </div>
                         
                         <div class="mb-3">
