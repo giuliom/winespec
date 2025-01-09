@@ -1,0 +1,63 @@
+<!-- public/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Our Wine Collection</title>
+  <!-- Link to Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;700&display=swap" rel="stylesheet">
+  <!-- Link to Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <!-- Link to your CSS file -->
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+
+<!-- Template Header -->
+<header class="header">
+    <div class="logo">
+        <i class="fas fa-wine-bottle"></i>
+        <span>WineSpec</span>
+    </div>
+    <nav class="main-nav">
+        <a href="index.html" class="nav-link"><i class="fas fa-home"></i> Home</a>
+        <a href="wines.html" class="nav-link"><i class="fas fa-wine-glass-alt"></i> Wines</a>
+        <a href="collections.html" class="nav-link"><i class="fas fa-list"></i> Collections</a>
+        <button class="btn btn-outline"><i class="fas fa-sign-in-alt"></i> Sign In</button>
+        <button class="btn btn-primary"><i class="fas fa-user-plus"></i> Register</button>
+    </nav>
+</header>
+
+<!-- Template Wine Card -->
+<template id="wine-card-template">
+    <div class="wine-card">
+        <div class="wine-image">
+            <i class="fas fa-wine-bottle wine-icon"></i>
+        </div>
+        <div class="wine-details">
+            <h2 class="wine-title">${wine.name} <span class="wine-year">(${wine.year})</span></h2>
+            <ul>
+                <li><i class="fas fa-wine-glass-alt"></i><span><strong>Grape:</strong></span></li>
+                <li><i class="fas fa-percentage"></i><span><strong>Alcohol Content:</strong>%</span></li>
+                <li><i class="fas fa-tint"></i><span><strong>Type:</strong></span></li>
+                <li><i class="fas fa-industry"></i><span><strong>Winery:</strong></span></li>
+                <li><i class="fas fa-map-marker-alt"></i><span><strong>Region:</strong></span></li>
+                <li><i class="fas fa-globe"></i><span><strong>Country:</strong></span></li>
+                <li><i class="fas fa-dollar-sign"></i><span><strong>Price:</strong></span></li>
+                <li><i class="fas fa-wine-glass"></i><span><strong>Volume:</strong> L</span></li>
+            </ul>
+        </div>
+        <a href="#" class="wine-card__link"></a>
+    </div>
+</template>
+
+<!-- Template Footer -->
+<template id="footer-template">
+    <footer>
+        <p>&copy; 2024 WineSpec. All rights reserved.</p>
+    </footer>
+</template>
+
+</body>
+</html>

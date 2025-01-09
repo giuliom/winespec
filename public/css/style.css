@@ -2,25 +2,25 @@
 
 /* Define CSS Variables */
 :root {
-    --color-dark-red: #8B0000;
-    --color-dark-gray: #333;
-    --color-light-gray: #f5f5f5;
-    --color-gold: #ffcc00;
-    --color-white: #fff;
-    --color-hover-red: #a30000; /* Slightly darker red for hover effects */
+    --primary-color: #7e1f35;
+    --secondary-color: #6a1a2d;
+    --accent-color: #f4c430;
+    --background-color: #f9f9f9;
+    --text-color: #333;
+    --muted-text-color: #777;
+    --heading-color: #7e1f35;
 }
-
 /* Global Styles */
 body {
     font-family: 'Crimson Pro', serif;
     margin: 0;
     padding: 0;
-    background-color: #fdfaf6;
-    color: #333;
+    background-color: var(--background-color);
+    color: var(--text-color);
 }
 
 header {
-    background-color: #7e1f35;
+    background-color: var(--heading-color);
     color: #fff;
     padding: 20px;
     text-align: center;

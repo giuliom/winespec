@@ -6,7 +6,6 @@ import { Winery, getWineryFromName } from "./winery.ts";
 export interface Wine {
     id: string;
     name: string;
-    year: number;
     grapes: string[];
     abv: number;
     types: string[];
@@ -16,10 +15,18 @@ export interface Wine {
     sub_region: string;
     region: string;
     country: string;
-    price: number;
-    volume: number;
     uuid: string;
     submitter_id: number;
+  }
+
+  export interface WineInstance {
+    id: string;
+    wine_id: string;
+    year: number;
+    volume: number; // up until here must be unique
+    closure: string; // should I have them in collection or general data?
+    has_sulfites: boolean; 
+    price: number;
   }
 
 export const requiredFields = ['name', 'year', 'grapes', 'abv', 'types', 'winery', 

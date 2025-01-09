@@ -2,7 +2,7 @@ import {config, API_URL} from './config.js';
 
 async function getContent() {
   try {
-      const response = await fetch(`${config.endpoint}${API_URL}/content`);
+      const response = await fetch(`${config.endpoint}${API_URL}/wines`);
       const data = await response.json();
       displayData(data);
     } catch(error) {

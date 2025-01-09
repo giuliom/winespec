@@ -18,7 +18,7 @@ const handler = async (req: Request): Promise<Response> => {
     }
 
     // API Content
-    if (url.pathname === "/api/content") {
+    if (url.pathname === "/api/wines" && req.method === "GET") {
       const connection = await pool.connect();
       try {
         const wines = await Winelib.getAllWines(connection);
