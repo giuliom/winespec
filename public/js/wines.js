@@ -19,38 +19,23 @@ function displayData(data) {
     const wineDiv = document.createElement('div');
     wineDiv.classList.add('wine-box');
 
-     // Generate the grapes HTML
-     const grapesHTML = wine.grapes
-     .map(type => `<span class="wine-type">${type}</span>`)
-     .join(', ');
-
-    // Generate the types HTML
-    const typesHTML = wine.types
-        .map(type => `<span class="wine-type">${type}</span>`)
-        .join(', ');
-
+    console.log(wine.grapes);
+  
     // Populate the div with wine details
     wineDiv.innerHTML = `
-    <div class="wine-card">
-        <div class="wine-image">
-            <i class="fas fa-wine-bottle wine-icon"></i>
-        </div>
-        <div class="wine-details">
-            <h2 class="wine-title">${wine.name} <span class="wine-year">(${wine.year})</span></h2>
-            <ul>
-                <li><i class="fas fa-wine-glass-alt"></i><span><strong>Grape:</strong> ${grapesHTML}</span></li>
-                <li><i class="fas fa-percentage"></i><span><strong>Alcohol Content:</strong> ${wine.abv}%</span></li>
-                <li><i class="fas fa-tint"></i><span><strong>Type:</strong> ${typesHTML}</span></li>
-                <li><i class="fas fa-industry"></i><span><strong>Winery:</strong> ${wine.winery}</span></li>
-                <li><i class="fas fa-map-marker-alt"></i><span><strong>Region:</strong> ${wine.region}</span></li>
-                <li><i class="fas fa-globe"></i><span><strong>Country:</strong> ${wine.country}</span></li>
-                <li><i class="fas fa-dollar-sign"></i><span><strong>Price:</strong> $${wine.price.toFixed(2)}</span></li>
-                <li><i class="fas fa-wine-glass"></i><span><strong>Volume:</strong> ${wine.volume}L</span></li>
-                <li><i class="fas fa-boxes"></i><span><strong>Count:</strong> ${wine.count}</span></li>
-            </ul>
-        </div>
-    </div>
-    `;
+      <winecard-component
+        name="${wine.name}"
+        year="${wine.year}"
+        grapes="${wine.grapes}"
+        abv="${wine.abv}"
+        types="${wine.types}"
+        winery="${wine.winery}"
+        region="${wine.region}"
+        country="${wine.country}"
+        price="${wine.price.toFixed(2)}"
+        volume="${wine.volume}"
+        count="${wine.count}"
+      ></winecard-component>`;
 
     // Create an anchor tag and wrap the wineDiv
     const link = document.createElement('a');
