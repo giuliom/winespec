@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Global Alpine Component Example</title>
+    <!-- Include the module that registers your component -->
+    <script src="/js/components/components.js" type="module" defer></script>
+    <style>
+      /* (Your CSS styles here) */
+    </style>
+  </head>
+  <body>
+    <!-- Reference the component by name -->
+    <div class="autocomplete-container" x-data="multiSelectAutocomplete">
+      <!-- component markup -->
+      <div class="tags" x-show="selected.length">
+        <template x-for="(item, index) in selected" :key="index">
+          <span class="tag">
+            <span x-text="item"></span>
+            <button type="button" @click="remove(index)">&times;</button>
+          </span>
+        </template>
+      </div>
+      <input
+        type="text"
+        x-model="query"
+        @input="search()"
+        @keydown.escape="isOpen = false"
+        placeholder="Search..."
+        class="w-full px-4 py-2 border rounded mt-2"
+      />
+      <div x-show="isOpen" @click.outside="isOpen = false" class="autocomplete-suggestions">
+        <template x-for="(item, index) in filteredItems" :key="index">
+          <div class="autocomplete-suggestion" x-text="item" @click="select(item)"></div>
+        </template>
+      </div>
+    </div>
+  </body>
+</html>
