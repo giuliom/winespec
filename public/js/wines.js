@@ -1,4 +1,3 @@
-import Alpine from 'https://esm.sh/alpinejs@3.14.8';
 import { config, API_URL } from './config.js';
 
 async function getContent() {
@@ -48,10 +47,6 @@ function displayData(data) {
     container.appendChild(link);
 });
 }
-
-// Alpine startup
-globalThis.window.Alpine = Alpine
-Alpine.start()
   
   // Call the function when the page loads
 await getContent();
