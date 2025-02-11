@@ -25,20 +25,8 @@
                         
                         <div class="mb-3">
                             <label class="form-label">Type</label>
-                            <div class="checkbox-container">
-                                <input type="text" class="form-control mb-2 search-input" placeholder="Search types...">
-                                <div class="checkbox-group" id="types">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" name="types[]" value="Red" id="typeRed">
-                                        <label class="form-check-label" for="typeRed">Red</label>
-                                    </div>
-                                    <!-- Other checkboxes... -->
-                                </div>
+                            <div class="autocomplete-container" x-data="multiSelectAutocomplete()">
                             </div>
-                        </div>
-
-                        <div class="autocomplete-container" x-data="multiSelectAutocomplete()">
-                            <label class="form-label">Type Autocomplete</label>
                         </div>
                         
                         <div class="mb-3">
