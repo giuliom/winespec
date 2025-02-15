@@ -1,8 +1,15 @@
 import { serveFile } from "jsr:@std/http/file-server";
 import { dbClient, pool } from "./database.ts";
 import { logRequest } from "./utils/logging.ts";
-import * as Winelib from "./routes/wine.ts";
-import * as Winerylib from "./routes/winery.ts";
+import * as Winelib from "./controllers/wine.ts";
+import * as Winerylib from "./controllers/winery.ts";
+import { Router } from "./router.ts";
+
+const router = new Router();
+
+router.add("GET", "/", async (_req) => {
+  return new Response("Hello, world!");
+});
 
 const handler = async (req: Request): Promise<Response> => {
   const url = new URL(req.url);
@@ -143,3 +150,4 @@ Deno.addSignalListener("SIGINT", sigIntHandler);
 
 console.log("Server running on http://localhost:8000");
 Deno.serve({ port: 8000 }, handler);
+//Deno.serve({ port: 8000 }, (request) => router.route(request));
